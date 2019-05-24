@@ -1,8 +1,8 @@
 package io.pilgrimdb.common.db.base
 
 import io.pilgrimdb.common.extensions.substitute
-import io.pilgrimdb.common.migrations.ModelState
 import io.pilgrimdb.common.model.Field
+import io.pilgrimdb.common.model.ModelState
 
 data class ColumnDBParameters(val type: String?, val check: String?)
 

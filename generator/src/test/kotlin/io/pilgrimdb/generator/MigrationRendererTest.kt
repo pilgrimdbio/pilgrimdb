@@ -2,12 +2,14 @@ package io.pilgrimdb.generator
 
 import io.pilgrimdb.common.migrations.builders.migration
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
-class MigrationFileGeneratorTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class MigrationRendererTest {
 
     @Test
     fun testGenerate() {
-        val a = migration {
+        val a = migration("packge", "name") {
             createModel("test1") {
                 autoField("id")
                 charField("name") {
@@ -26,6 +28,6 @@ class MigrationFileGeneratorTest {
             }
         }
 
-        val output = MigrationFileGenerator("test.package", a).render()
+        val output = MigrationRenderer(a).render()
     }
 }

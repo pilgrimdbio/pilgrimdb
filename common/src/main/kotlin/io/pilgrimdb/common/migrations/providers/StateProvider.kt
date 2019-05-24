@@ -1,6 +1,6 @@
 package io.pilgrimdb.common.migrations.providers
 
-import io.pilgrimdb.common.migrations.ProjectState
+import io.pilgrimdb.common.model.ProjectState
 
 interface StateProvider {
 

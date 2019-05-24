@@ -2,6 +2,8 @@ package io.pilgrimdb.common.migrations
 
 import io.pilgrimdb.common.migrations.operations.CreateModel
 import io.pilgrimdb.common.model.AutoField
+import io.pilgrimdb.common.model.ModelState
+import io.pilgrimdb.common.model.ProjectState
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContain
 import org.junit.jupiter.api.Nested

@@ -1,6 +1,6 @@
 package io.pilgrimdb.common.migrations.operations
 
-import io.pilgrimdb.common.migrations.ProjectState
+import io.pilgrimdb.common.model.ProjectState
 
 /**
  * Base class for all migration operations

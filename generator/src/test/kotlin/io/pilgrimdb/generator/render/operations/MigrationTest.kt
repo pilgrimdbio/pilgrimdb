@@ -21,6 +21,8 @@ class MigrationTest {
     @Test
     fun testRender() {
         val field = Migration(
+            "packageName",
+            "migrationName",
             mutableListOf(
                 CreateModel("test")
             )
@@ -30,7 +32,7 @@ class MigrationTest {
 
         val output = builder.build().toString()
         output shouldEqual """
-        |migration {
+        |migration("packageName", "migrationName") {
         |    createModel("test") {
         |    }
         |}

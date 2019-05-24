@@ -4,9 +4,9 @@ import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
 import io.pilgrimdb.common.config.DatabaseConfig
-import io.pilgrimdb.common.migrations.ModelState
 import io.pilgrimdb.common.model.AutoField
 import io.pilgrimdb.common.model.CharField
+import io.pilgrimdb.common.model.ModelState
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

@@ -1,6 +1,7 @@
 package io.pilgrimdb.common.migrations.builders
 
 import io.pilgrimdb.common.migrations.operations.CreateModel
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldEqualTo
@@ -13,11 +14,13 @@ class MigrationBuilderTest {
     @Test
     fun testBuild() {
 
-        val migration = migration {
+        val migration = migration("package", "name") {
             createModel("tableName") {
             }
         }
 
+        migration.packageName shouldBeEqualTo "package"
+        migration.migrationName shouldBeEqualTo "name"
         migration.operations.size shouldEqualTo 1
         migration.operations[0] shouldBeInstanceOf CreateModel::class
         (migration.operations[0] as CreateModel).name shouldEqual "tableName"

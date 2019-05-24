@@ -76,12 +76,11 @@ subprojects {
     }
 
     dependencies {
-        api("org.slf4j", "slf4j-api", "1.7.25")
         implementation(kotlin("stdlib"))
+        implementation("io.github.microutils:kotlin-logging:1.6.24")
 
         testImplementation(kotlin("test-junit"))
         testImplementation("org.amshove.kluent:kluent:1.49")
-        testImplementation("org.slf4j", "slf4j-log4j12", "1.7.26")
         testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
         testImplementation("io.mockk:mockk:1.9.3")
     }

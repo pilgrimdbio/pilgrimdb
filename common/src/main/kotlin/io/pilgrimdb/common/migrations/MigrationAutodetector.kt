@@ -2,6 +2,7 @@ package io.pilgrimdb.common.migrations
 
 import io.pilgrimdb.common.migrations.operations.CreateModel
 import io.pilgrimdb.common.migrations.operations.Operation
+import io.pilgrimdb.common.model.ProjectState
 
 class MigrationAutodetector(private val fromState: ProjectState, private val toState: ProjectState) {
 

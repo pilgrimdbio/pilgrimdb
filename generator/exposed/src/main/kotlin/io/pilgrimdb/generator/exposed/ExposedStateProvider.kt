@@ -1,8 +1,8 @@
 package io.pilgrimdb.generator.exposed
 
 import io.pilgrimdb.common.annotations.PilgrimModel
-import io.pilgrimdb.common.migrations.ProjectState
 import io.pilgrimdb.common.migrations.providers.StateProvider
+import io.pilgrimdb.common.model.ProjectState
 import kotlin.reflect.full.isSubclassOf
 import org.jetbrains.exposed.sql.Table
 import org.reflections.Reflections
