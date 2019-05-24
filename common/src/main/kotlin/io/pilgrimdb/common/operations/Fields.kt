@@ -10,7 +10,7 @@ import kotlin.properties.Delegates
  */
 sealed class FieldOperation : Operation()
 
-// ------------------------------------ AddField ----------------------------------
+// ------------------------------------ AddField ------------------------------------
 /**
  * Adds a new field in a table
  * @param tableName the name of the table

@@ -1,7 +1,6 @@
 package io.pilgrimdb.generator.exposed
 
 import io.pilgrimdb.common.PilgrimModel
-import io.pilgrimdb.generator.TestDataClass
 import org.jetbrains.exposed.sql.Table
 
 @PilgrimModel
@@ -18,6 +17,4 @@ object Cities : Table() {
 
 fun main() {
     val state = ExposedStateProvider("net.buluba.pilgrim.exposed").getState()
-    val testing = TestDataClass("sdfsdffs")
-    val a = 5
 }

@@ -1,4 +1,4 @@
-package io.pilgrimdb.generator.extensions.operations
+package io.pilgrimdb.generator.render.operations
 
 import com.squareup.kotlinpoet.CodeBlock
 import io.pilgrimdb.common.Migration

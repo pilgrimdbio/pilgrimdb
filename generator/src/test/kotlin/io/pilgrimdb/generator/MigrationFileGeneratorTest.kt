@@ -1,9 +1,9 @@
 package io.pilgrimdb.generator
 
+import io.pilgrimdb.common.builders.autoField
+import io.pilgrimdb.common.builders.charField
+import io.pilgrimdb.common.builders.integerField
 import io.pilgrimdb.common.migration
-import io.pilgrimdb.common.model.autoField
-import io.pilgrimdb.common.model.charField
-import io.pilgrimdb.common.model.integerField
 import io.pilgrimdb.common.operations.createModel
 import org.junit.Test
 
@@ -30,7 +30,6 @@ class MigrationFileGeneratorTest {
             }
         }
 
-        val output = MigrationFileGenerator("test.sdfsdfs", a).render()
-        val test = "fsdf"
+        val output = MigrationFileGenerator("test.package", a).render()
     }
 }

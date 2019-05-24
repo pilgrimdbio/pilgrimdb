@@ -10,7 +10,7 @@ import io.pilgrimdb.common.model.ProjectState
  */
 sealed class ModelOperation : Operation()
 
-// ------------------------------------ CreateModel ----------------------------------
+// ------------------------------------ CreateModel --------------------------------------
 
 /**
  * Operation for creating a new table
@@ -24,6 +24,12 @@ data class CreateModel(val name: String, val fields: MutableList<Field> = mutabl
     }
 }
 
+/**
+ * Builder used in migration dsl for generating CreateModel operation
+ * @see CreateModel
+ *
+ * @param name the name of the table to add the field
+ */
 class CreateModelBuilder(val name: String) {
 
     internal val fields = mutableListOf<Field>()
@@ -33,6 +39,9 @@ class CreateModelBuilder(val name: String) {
     }
 }
 
+/**
+ * Extension method implementing the DSL for CreateModel
+ */
 fun MigrationBuilder.createModel(name: String, setup: CreateModelBuilder.() -> Unit) {
     val createModelBuilder = CreateModelBuilder(name)
     createModelBuilder.setup()

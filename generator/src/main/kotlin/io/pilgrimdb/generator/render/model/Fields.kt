@@ -1,4 +1,4 @@
-package io.pilgrimdb.generator.extensions.model
+package io.pilgrimdb.generator.render.model
 
 import com.squareup.kotlinpoet.CodeBlock
 import io.pilgrimdb.common.model.AutoField
@@ -15,21 +15,39 @@ fun Field.render(builder: CodeBlock.Builder) {
     }
 }
 
+fun commonAttributesRender(field: Field, builder: CodeBlock.Builder) {
+    if (field.primaryKey) {
+        builder.addStatement("primaryKey = true")
+    }
+
+    if (field.nullable) {
+        builder.addStatement("nullable = true")
+    }
+
+    if (field.unique) {
+        builder.addStatement("unique = true")
+    }
+
+    if (field.index) {
+        builder.addStatement("index = true")
+    }
+}
+
 fun AutoField.render(builder: CodeBlock.Builder) {
-    builder.beginControlFlow("autoField($name)")
+    builder.beginControlFlow("autoField(\"$name\")")
+    commonAttributesRender(this, builder)
     builder.endControlFlow()
 }
 
 fun IntegerField.render(builder: CodeBlock.Builder) {
-    builder.beginControlFlow("integerField($name)")
-    if (unique) {
-        builder.addStatement("unique = true")
-    }
+    builder.beginControlFlow("integerField(\"$name\")")
+    commonAttributesRender(this, builder)
     builder.endControlFlow()
 }
 
 fun CharField.render(builder: CodeBlock.Builder) {
-    builder.beginControlFlow("charField($name)")
+    builder.beginControlFlow("charField(\"$name\")")
     builder.addStatement("maxLength = $maxLength")
+    commonAttributesRender(this, builder)
     builder.endControlFlow()
 }

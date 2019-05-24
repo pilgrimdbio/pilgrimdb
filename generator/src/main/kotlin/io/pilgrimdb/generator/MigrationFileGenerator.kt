@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.PropertySpec
 import io.pilgrimdb.common.Migration
-import io.pilgrimdb.generator.extensions.operations.render
+import io.pilgrimdb.generator.render.operations.render
 
 class MigrationFileGenerator(private val packageName: String, private val migration: Migration) {
 
@@ -20,11 +20,11 @@ class MigrationFileGenerator(private val packageName: String, private val migrat
 
     private fun addImports(builder: FileSpec.Builder) {
         // Operations
-        builder.addImport("net.buluba.pilgrim.operations", "createModel")
-        builder.addImport("net.buluba.pilgrim.operations", "addField")
+        builder.addImport("net.buluba.pilgrim.builders", "createModel")
+        builder.addImport("net.buluba.pilgrim.builders", "addField")
         // Model
-        builder.addImport("net.buluba.pilgrim.model", "autoField")
-        builder.addImport("net.buluba.pilgrim.model", "charField")
-        builder.addImport("net.buluba.pilgrim.model", "integerField")
+        builder.addImport("net.buluba.pilgrim.builders", "autoField")
+        builder.addImport("net.buluba.pilgrim.builders", "charField")
+        builder.addImport("net.buluba.pilgrim.builders", "integerField")
     }
 }

@@ -6,40 +6,46 @@ import io.pilgrimdb.common.model.ProjectState
 import io.pilgrimdb.common.operations.CreateModel
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContain
-import org.junit.Test
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MigrationAutodetectorTest {
 
-    @Test
-    fun createModelTest() {
-        val fromState = ProjectState()
-        val toState = ProjectState(
-            models = mutableMapOf(
-                "test" to ModelState(
-                    "test", mutableListOf(
-                        AutoField("field1", false, false, false, false)
+    @Nested
+    inner class CreateModel {
+        @Test
+        fun testAdded() {
+            val fromState = ProjectState()
+            val toState = ProjectState(
+                models = mutableMapOf(
+                    "test" to ModelState(
+                        "test", mutableListOf(
+                            AutoField("field1", false, false, false, false)
+                        )
                     )
                 )
             )
-        )
-        val operations = MigrationAutodetector(fromState, toState).changes()
+            val operations = MigrationAutodetector(fromState, toState).changes()
 
-        operations shouldContain CreateModel("test", toState.models["test"]?.fields!!)
-    }
+            operations shouldContain CreateModel("test", toState.models["test"]?.fields!!)
+        }
 
-    @Test
-    fun createModelTest_NoChanges() {
-        val toState = ProjectState(
-            models = mutableMapOf(
-                "test" to ModelState(
-                    "test", mutableListOf(
-                        AutoField("field1", false, false, false, false)
+        @Test
+        fun testNoChanges() {
+            val toState = ProjectState(
+                models = mutableMapOf(
+                    "test" to ModelState(
+                        "test", mutableListOf(
+                            AutoField("field1", false, false, false, false)
+                        )
                     )
                 )
             )
-        )
-        val operations = MigrationAutodetector(toState, toState).changes()
+            val operations = MigrationAutodetector(toState, toState).changes()
 
-        operations.shouldBeEmpty()
+            operations.shouldBeEmpty()
+        }
     }
 }

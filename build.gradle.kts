@@ -1,4 +1,6 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.io.File
 
 plugins {
     kotlin("jvm") version "1.3.31" apply true
@@ -13,6 +15,7 @@ jacoco {
 buildscript {
     repositories {
         mavenLocal()
+        jcenter()
         maven(
             url = "https://plugins.gradle.org/m2/"
         )
@@ -20,6 +23,7 @@ buildscript {
 
     dependencies {
         classpath("org.jlleitschuh.gradle:ktlint-gradle:8.0.0")
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.9.18")
     }
 }
 
@@ -46,6 +50,23 @@ subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
+    apply(plugin = "org.jetbrains.dokka")
+
+    repositories {
+        jcenter()
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    tasks.test {
+        useJUnitPlatform()
+
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+    }
 
     ktlint {
         outputToConsole.set(true)
@@ -62,7 +83,7 @@ subprojects {
         testImplementation("org.amshove.kluent:kluent:1.49")
         testImplementation("org.slf4j", "slf4j-log4j12", "1.7.26")
         testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
-        testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.16")
+        testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     }
 }
 
