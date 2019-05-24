@@ -1,6 +1,6 @@
 package io.pilgrimdb.generator
 
-import io.pilgrimdb.common.builders.migration
+import io.pilgrimdb.common.migrations.builders.migration
 import org.junit.jupiter.api.Test
 
 class MigrationFileGeneratorTest {

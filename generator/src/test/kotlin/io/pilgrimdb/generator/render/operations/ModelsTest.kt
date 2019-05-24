@@ -1,8 +1,8 @@
 package io.pilgrimdb.generator.render.operations
 
 import com.squareup.kotlinpoet.CodeBlock
+import io.pilgrimdb.common.migrations.operations.CreateModel
 import io.pilgrimdb.common.model.AutoField
-import io.pilgrimdb.common.operations.CreateModel
 import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -24,7 +24,8 @@ class FieldsTest {
         @Test
         fun testRender() {
             val operation = CreateModel(
-                "test", fields = mutableListOf(
+                "test",
+                fields = mutableListOf(
                     AutoField("id", primaryKey = true, index = false, unique = false, nullable = false)
                 )
             )

@@ -1,7 +1,7 @@
 package io.pilgrimdb.common
 
-import io.pilgrimdb.common.builders.migration
-import io.pilgrimdb.common.model.ProjectState
+import io.pilgrimdb.common.migrations.ProjectState
+import io.pilgrimdb.common.migrations.builders.migration
 
 val a = migration {
     createModel("test1") {

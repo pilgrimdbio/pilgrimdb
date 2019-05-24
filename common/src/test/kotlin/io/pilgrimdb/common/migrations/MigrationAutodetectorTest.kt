@@ -1,9 +1,7 @@
-package io.pilgrimdb.common
+package io.pilgrimdb.common.migrations
 
+import io.pilgrimdb.common.migrations.operations.CreateModel
 import io.pilgrimdb.common.model.AutoField
-import io.pilgrimdb.common.model.ModelState
-import io.pilgrimdb.common.model.ProjectState
-import io.pilgrimdb.common.operations.CreateModel
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContain
 import org.junit.jupiter.api.Nested
@@ -21,7 +19,8 @@ class MigrationAutodetectorTest {
             val toState = ProjectState(
                 models = mutableMapOf(
                     "test" to ModelState(
-                        "test", mutableListOf(
+                        "test",
+                        mutableListOf(
                             AutoField("field1", false, false, false, false)
                         )
                     )
@@ -29,7 +28,10 @@ class MigrationAutodetectorTest {
             )
             val operations = MigrationAutodetector(fromState, toState).changes()
 
-            operations shouldContain CreateModel("test", toState.models["test"]?.fields!!)
+            operations shouldContain CreateModel(
+                "test",
+                toState.models["test"]?.fields!!
+            )
         }
 
         @Test
@@ -37,7 +39,8 @@ class MigrationAutodetectorTest {
             val toState = ProjectState(
                 models = mutableMapOf(
                     "test" to ModelState(
-                        "test", mutableListOf(
+                        "test",
+                        mutableListOf(
                             AutoField("field1", false, false, false, false)
                         )
                     )

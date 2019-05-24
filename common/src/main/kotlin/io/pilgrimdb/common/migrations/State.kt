@@ -1,4 +1,6 @@
-package io.pilgrimdb.common.model
+package io.pilgrimdb.common.migrations
+
+import io.pilgrimdb.common.model.Field
 
 class ProjectState(val models: MutableMap<String, ModelState> = mutableMapOf()) {
 

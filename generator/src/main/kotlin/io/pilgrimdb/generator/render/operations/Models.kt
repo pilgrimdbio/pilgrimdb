@@ -1,7 +1,7 @@
 package io.pilgrimdb.generator.render.operations
 
 import com.squareup.kotlinpoet.CodeBlock
-import io.pilgrimdb.common.operations.CreateModel
+import io.pilgrimdb.common.migrations.operations.CreateModel
 import io.pilgrimdb.generator.render.model.render
 
 fun CreateModel.render(builder: CodeBlock.Builder) {

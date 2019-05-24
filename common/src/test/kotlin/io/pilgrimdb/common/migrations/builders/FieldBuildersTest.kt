@@ -1,9 +1,10 @@
-package io.pilgrimdb.common.builders
+package io.pilgrimdb.common.migrations.builders
 
 import io.pilgrimdb.common.model.AutoField
 import io.pilgrimdb.common.model.CharField
 import io.pilgrimdb.common.model.Field
 import io.pilgrimdb.common.model.IntegerField
+import kotlin.properties.Delegates
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldBeTrue
@@ -12,7 +13,6 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import kotlin.properties.Delegates
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FieldBuildersTest {

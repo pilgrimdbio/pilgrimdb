@@ -1,8 +1,7 @@
-package io.pilgrimdb.common
+package io.pilgrimdb.common.migrations
 
-import io.pilgrimdb.common.model.ProjectState
-import io.pilgrimdb.common.operations.CreateModel
-import io.pilgrimdb.common.operations.Operation
+import io.pilgrimdb.common.migrations.operations.CreateModel
+import io.pilgrimdb.common.migrations.operations.Operation
 
 class MigrationAutodetector(private val fromState: ProjectState, private val toState: ProjectState) {
 

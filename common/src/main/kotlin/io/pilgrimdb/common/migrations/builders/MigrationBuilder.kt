@@ -1,7 +1,7 @@
-package io.pilgrimdb.common.builders
+package io.pilgrimdb.common.migrations.builders
 
-import io.pilgrimdb.common.operations.Migration
-import io.pilgrimdb.common.operations.Operation
+import io.pilgrimdb.common.migrations.operations.Migration
+import io.pilgrimdb.common.migrations.operations.Operation
 
 class MigrationBuilder : AllOperationBuildersDSL {
 

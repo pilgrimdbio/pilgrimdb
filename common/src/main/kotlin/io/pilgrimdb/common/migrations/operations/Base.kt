@@ -1,6 +1,6 @@
-package io.pilgrimdb.common.operations
+package io.pilgrimdb.common.migrations.operations
 
-import io.pilgrimdb.common.model.ProjectState
+import io.pilgrimdb.common.migrations.ProjectState
 
 /**
  * Base class for all migration operations
@@ -12,4 +12,3 @@ abstract class Operation {
      */
     abstract fun stateForwards(state: ProjectState)
 }
-

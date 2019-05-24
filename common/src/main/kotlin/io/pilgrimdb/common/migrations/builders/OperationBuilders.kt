@@ -1,9 +1,9 @@
-package io.pilgrimdb.common.builders
+package io.pilgrimdb.common.migrations.builders
 
+import io.pilgrimdb.common.migrations.operations.AddField
+import io.pilgrimdb.common.migrations.operations.CreateModel
+import io.pilgrimdb.common.migrations.operations.Operation
 import io.pilgrimdb.common.model.Field
-import io.pilgrimdb.common.operations.AddField
-import io.pilgrimdb.common.operations.CreateModel
-import io.pilgrimdb.common.operations.Operation
 import kotlin.properties.Delegates
 
 interface OperationBuilderDSL {
@@ -91,4 +91,6 @@ interface AddFieldBuilderDSL : OperationBuilderDSL {
 /**
  * Barrel interface for all operation builders
  */
-interface AllOperationBuildersDSL : CreateModelBuilderDSL, AddFieldBuilderDSL
+interface AllOperationBuildersDSL :
+    CreateModelBuilderDSL,
+    AddFieldBuilderDSL

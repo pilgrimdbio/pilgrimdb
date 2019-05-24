@@ -83,7 +83,7 @@ subprojects {
         testImplementation("org.amshove.kluent:kluent:1.49")
         testImplementation("org.slf4j", "slf4j-log4j12", "1.7.26")
         testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
-        testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+        testImplementation("io.mockk:mockk:1.9.3")
     }
 }
 

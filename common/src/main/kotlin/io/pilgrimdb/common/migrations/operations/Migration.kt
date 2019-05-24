@@ -1,6 +1,6 @@
-package io.pilgrimdb.common.operations
+package io.pilgrimdb.common.migrations.operations
 
-import io.pilgrimdb.common.model.ProjectState
+import io.pilgrimdb.common.migrations.ProjectState
 
 data class Migration(val operations: MutableList<Operation> = mutableListOf()) {
 
@@ -9,4 +9,3 @@ data class Migration(val operations: MutableList<Operation> = mutableListOf()) {
         return state
     }
 }
-

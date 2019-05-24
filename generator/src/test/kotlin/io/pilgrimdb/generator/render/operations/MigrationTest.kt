@@ -1,8 +1,8 @@
 package io.pilgrimdb.generator.render.operations
 
 import com.squareup.kotlinpoet.CodeBlock
-import io.pilgrimdb.common.operations.CreateModel
-import io.pilgrimdb.common.operations.Migration
+import io.pilgrimdb.common.migrations.operations.CreateModel
+import io.pilgrimdb.common.migrations.operations.Migration
 import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,7 +20,11 @@ class MigrationTest {
 
     @Test
     fun testRender() {
-        val field = Migration(mutableListOf(CreateModel("test")))
+        val field = Migration(
+            mutableListOf(
+                CreateModel("test")
+            )
+        )
 
         field.render(builder)
 

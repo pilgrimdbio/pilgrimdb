@@ -1,4 +1,4 @@
-package io.pilgrimdb.common.builders
+package io.pilgrimdb.common.migrations.builders
 
 import io.pilgrimdb.common.model.AutoField
 import io.pilgrimdb.common.model.CharField
@@ -150,4 +150,7 @@ interface CharFieldBuilderDSL : FieldBuilderDSL {
 /**
  * Barrel interface for implementing all FieldsDSL
  */
-interface AllFieldsBuilderDSL : AutoFieldBuilderDSL, IntegerFieldBuilderDSL, CharFieldBuilderDSL
+interface AllFieldsBuilderDSL :
+    AutoFieldBuilderDSL,
+    IntegerFieldBuilderDSL,
+    CharFieldBuilderDSL

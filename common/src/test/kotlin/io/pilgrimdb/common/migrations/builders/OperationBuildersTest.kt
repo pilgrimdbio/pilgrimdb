@@ -1,9 +1,10 @@
-package io.pilgrimdb.common.builders
+package io.pilgrimdb.common.migrations.builders
 
+import io.pilgrimdb.common.migrations.operations.AddField
+import io.pilgrimdb.common.migrations.operations.CreateModel
+import io.pilgrimdb.common.migrations.operations.Operation
 import io.pilgrimdb.common.model.AutoField
-import io.pilgrimdb.common.operations.AddField
-import io.pilgrimdb.common.operations.CreateModel
-import io.pilgrimdb.common.operations.Operation
+import kotlin.properties.Delegates
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqualTo
@@ -11,7 +12,6 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import kotlin.properties.Delegates
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OperationBuildersTest {

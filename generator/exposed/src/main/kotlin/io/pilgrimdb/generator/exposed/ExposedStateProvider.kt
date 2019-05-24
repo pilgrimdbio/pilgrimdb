@@ -1,11 +1,11 @@
 package io.pilgrimdb.generator.exposed
 
 import io.pilgrimdb.common.annotations.PilgrimModel
-import io.pilgrimdb.common.model.ProjectState
-import io.pilgrimdb.common.providers.StateProvider
+import io.pilgrimdb.common.migrations.ProjectState
+import io.pilgrimdb.common.migrations.providers.StateProvider
+import kotlin.reflect.full.isSubclassOf
 import org.jetbrains.exposed.sql.Table
 import org.reflections.Reflections
-import kotlin.reflect.full.isSubclassOf
 
 class ExposedStateProvider(private val packageName: String) : StateProvider {
 

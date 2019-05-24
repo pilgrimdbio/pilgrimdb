@@ -1,6 +1,6 @@
-package io.pilgrimdb.common.builders
+package io.pilgrimdb.common.migrations.builders
 
-import io.pilgrimdb.common.operations.CreateModel
+import io.pilgrimdb.common.migrations.operations.CreateModel
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldEqualTo
@@ -15,7 +15,6 @@ class MigrationBuilderTest {
 
         val migration = migration {
             createModel("tableName") {
-
             }
         }
 
