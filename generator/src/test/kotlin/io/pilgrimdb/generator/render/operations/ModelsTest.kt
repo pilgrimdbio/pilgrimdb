@@ -3,7 +3,6 @@ package io.pilgrimdb.generator.render.operations
 import com.squareup.kotlinpoet.CodeBlock
 import io.pilgrimdb.common.model.AutoField
 import io.pilgrimdb.common.operations.CreateModel
-import io.pilgrimdb.generator.render.operations.render
 import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested

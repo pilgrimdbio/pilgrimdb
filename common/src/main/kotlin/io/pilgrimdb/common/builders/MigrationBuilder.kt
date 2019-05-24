@@ -1,17 +1,9 @@
-package io.pilgrimdb.common
+package io.pilgrimdb.common.builders
 
-import io.pilgrimdb.common.model.ProjectState
+import io.pilgrimdb.common.operations.Migration
 import io.pilgrimdb.common.operations.Operation
 
-data class Migration(val operations: MutableList<Operation> = mutableListOf()) {
-
-    fun mutateState(state: ProjectState): ProjectState {
-        operations.forEach { it.stateForwards(state) }
-        return state
-    }
-}
-
-class MigrationBuilder {
+class MigrationBuilder : AllOperationBuildersDSL {
 
     private val operations = mutableListOf<Operation>()
 
@@ -19,7 +11,7 @@ class MigrationBuilder {
         return Migration(operations)
     }
 
-    internal fun addOperation(operation: Operation) {
+    override fun addOperation(operation: Operation) {
         operations += operation
     }
 }
@@ -29,4 +21,3 @@ fun migration(setup: MigrationBuilder.() -> Unit): Migration {
     migrationBuilder.setup()
     return migrationBuilder.build()
 }
-

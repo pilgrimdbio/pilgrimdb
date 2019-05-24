@@ -1,6 +1,6 @@
-package io.pilgrim.sample.exposed.sample
+package io.pilgrimdb.sample.exposed
 
-import io.pilgrimdb.common.PilgrimModel
+import io.pilgrimdb.common.annotations.PilgrimModel
 import org.jetbrains.exposed.sql.Table
 
 @PilgrimModel
@@ -13,8 +13,4 @@ object Users : Table() {
 object Cities : Table() {
     val id = Cities.integer("id").autoIncrement().primaryKey() // Column<Int>
     val name = Cities.varchar("name", 50) // Column<String>
-}
-
-fun main() {
-    val a = 5
 }

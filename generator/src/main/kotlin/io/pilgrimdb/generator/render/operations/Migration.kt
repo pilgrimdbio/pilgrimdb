@@ -1,7 +1,7 @@
 package io.pilgrimdb.generator.render.operations
 
 import com.squareup.kotlinpoet.CodeBlock
-import io.pilgrimdb.common.Migration
+import io.pilgrimdb.common.operations.Migration
 
 fun Migration.render(builder: CodeBlock.Builder) {
     builder.beginControlFlow("migration")

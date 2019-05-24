@@ -1,6 +1,6 @@
 package io.pilgrimdb.generator.exposed
 
-import io.pilgrimdb.common.PilgrimModel
+import io.pilgrimdb.common.annotations.PilgrimModel
 import org.jetbrains.exposed.sql.Table
 
 @PilgrimModel

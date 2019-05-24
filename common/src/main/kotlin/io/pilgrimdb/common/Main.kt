@@ -1,11 +1,7 @@
 package io.pilgrimdb.common
 
-import io.pilgrimdb.common.builders.autoField
-import io.pilgrimdb.common.builders.charField
-import io.pilgrimdb.common.builders.integerField
+import io.pilgrimdb.common.builders.migration
 import io.pilgrimdb.common.model.ProjectState
-import io.pilgrimdb.common.operations.addField
-import io.pilgrimdb.common.operations.createModel
 
 val a = migration {
     createModel("test1") {
@@ -18,6 +14,9 @@ val a = migration {
         autoField("id")
         charField("name") {
             maxLength = 50
+        }
+        charField("name2") {
+            maxLength = 100
         }
         integerField("test4") {
             index = true

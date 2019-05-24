@@ -1,11 +1,7 @@
 package io.pilgrimdb.generator
 
-import io.pilgrimdb.common.builders.autoField
-import io.pilgrimdb.common.builders.charField
-import io.pilgrimdb.common.builders.integerField
-import io.pilgrimdb.common.migration
-import io.pilgrimdb.common.operations.createModel
-import org.junit.Test
+import io.pilgrimdb.common.builders.migration
+import org.junit.jupiter.api.Test
 
 class MigrationFileGeneratorTest {
 

@@ -1,6 +1,5 @@
 package io.pilgrimdb.common.operations
 
-import io.pilgrimdb.common.MigrationBuilder
 import io.pilgrimdb.common.model.Field
 import io.pilgrimdb.common.model.ModelState
 import io.pilgrimdb.common.model.ProjectState
@@ -22,28 +21,4 @@ data class CreateModel(val name: String, val fields: MutableList<Field> = mutabl
     override fun stateForwards(state: ProjectState) {
         state.addModel(ModelState(name, fields))
     }
-}
-
-/**
- * Builder used in migration dsl for generating CreateModel operation
- * @see CreateModel
- *
- * @param name the name of the table to add the field
- */
-class CreateModelBuilder(val name: String) {
-
-    internal val fields = mutableListOf<Field>()
-
-    fun build(): CreateModel {
-        return CreateModel(name, fields)
-    }
-}
-
-/**
- * Extension method implementing the DSL for CreateModel
- */
-fun MigrationBuilder.createModel(name: String, setup: CreateModelBuilder.() -> Unit) {
-    val createModelBuilder = CreateModelBuilder(name)
-    createModelBuilder.setup()
-    addOperation(createModelBuilder.build())
 }

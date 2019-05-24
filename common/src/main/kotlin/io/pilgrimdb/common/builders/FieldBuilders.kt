@@ -4,25 +4,56 @@ import io.pilgrimdb.common.model.AutoField
 import io.pilgrimdb.common.model.CharField
 import io.pilgrimdb.common.model.Field
 import io.pilgrimdb.common.model.IntegerField
-import io.pilgrimdb.common.operations.AddFieldBuilder
-import io.pilgrimdb.common.operations.CreateModelBuilder
 import kotlin.properties.Delegates
 
+/**
+ * Base class for field builders
+ */
 sealed class FieldBuilder {
 
+    /**
+     * name of the field
+     */
     var name: String by Delegates.notNull()
 
+    /**
+     * if the field is primary key
+     */
     var primaryKey = false
 
+    /**
+     * if the field should be indexed
+     */
     var index = false
 
+    /**
+     * if the field is unique
+     */
     var unique = false
 
+    /**
+     * if the field is nullable
+     */
     var nullable = false
 
+    /**
+     * returns a Field instance
+     * @see Field
+     */
     abstract fun build(name: String): Field
 }
 
+interface FieldBuilderDSL {
+
+    fun addField(field: Field)
+}
+
+// --------------------------------- AutoField ---------------------------------
+
+/**
+ * Builder for [AutoField]
+ * @see AutoField
+ */
 class AutoFieldBuilder : FieldBuilder() {
 
     override fun build(name: String): AutoField {
@@ -30,13 +61,31 @@ class AutoFieldBuilder : FieldBuilder() {
     }
 }
 
-fun CreateModelBuilder.autoField(name: String, setup: AutoFieldBuilder.() -> Unit = {}) {
-    val fieldBuilder = AutoFieldBuilder()
-    fieldBuilder.setup()
-    val field = fieldBuilder.build(name)
-    fields += field
+/**
+ * Interface for creating [AutoField] using DSL
+ *
+ * Example usage:
+ * ```
+ * autoField("fieldName") {
+ *     primaryKey = true
+ * }
+ * ```
+ */
+interface AutoFieldBuilderDSL : FieldBuilderDSL {
+
+    fun autoField(name: String, setup: AutoFieldBuilder.() -> Unit = {}) {
+        val fieldBuilder = AutoFieldBuilder()
+        fieldBuilder.setup()
+        addField(fieldBuilder.build(name))
+    }
 }
 
+// --------------------------------- IntegerField ---------------------------------
+
+/**
+ * Builder for [IntegerField]
+ * @see IntegerField
+ */
 class IntegerFieldBuilder : FieldBuilder() {
 
     override fun build(name: String): IntegerField {
@@ -44,19 +93,31 @@ class IntegerFieldBuilder : FieldBuilder() {
     }
 }
 
-fun CreateModelBuilder.integerField(name: String, setup: IntegerFieldBuilder.() -> Unit = {}) {
-    val fieldBuilder = IntegerFieldBuilder()
-    fieldBuilder.setup()
-    val field = fieldBuilder.build(name)
-    fields += field
+/**
+ * Interface for creating [IntegerField] using DSL
+ *
+ * Example usage:
+ * ```
+ * integerField("fieldName") {
+ *     primaryKey = true
+ * }
+ * ```
+ */
+interface IntegerFieldBuilderDSL : FieldBuilderDSL {
+
+    fun integerField(name: String, setup: IntegerFieldBuilder.() -> Unit = {}) {
+        val fieldBuilder = IntegerFieldBuilder()
+        fieldBuilder.setup()
+        addField(fieldBuilder.build(name))
+    }
 }
 
-fun AddFieldBuilder.integerField(name: String, setup: IntegerFieldBuilder.() -> Unit = {}) {
-    val fieldBuilder = IntegerFieldBuilder()
-    fieldBuilder.setup()
-    field = fieldBuilder.build(name)
-}
+// --------------------------------- CharField ------------------------------------
 
+/**
+ * Builder for [CharField]
+ * @see CharField
+ */
 class CharFieldBuilder : FieldBuilder() {
 
     var maxLength: Int by Delegates.notNull()
@@ -66,9 +127,27 @@ class CharFieldBuilder : FieldBuilder() {
     }
 }
 
-fun CreateModelBuilder.charField(name: String, setup: CharFieldBuilder.() -> Unit = {}) {
-    val fieldBuilder = CharFieldBuilder()
-    fieldBuilder.setup()
-    val field = fieldBuilder.build(name)
-    fields += field
+/**
+ * Interface for creating [CharField] using DSL
+ *
+ * Example usage:
+ * ```
+ * charField("fieldName") {
+ *     maxLength = 150
+ *     primaryKey = true
+ * }
+ * ```
+ */
+interface CharFieldBuilderDSL : FieldBuilderDSL {
+
+    fun charField(name: String, setup: CharFieldBuilder.() -> Unit) {
+        val fieldBuilder = CharFieldBuilder()
+        fieldBuilder.setup()
+        addField(fieldBuilder.build(name))
+    }
 }
+
+/**
+ * Barrel interface for implementing all FieldsDSL
+ */
+interface AllFieldsBuilderDSL : AutoFieldBuilderDSL, IntegerFieldBuilderDSL, CharFieldBuilderDSL

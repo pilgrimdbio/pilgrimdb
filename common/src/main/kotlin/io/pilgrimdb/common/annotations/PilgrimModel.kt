@@ -1,4 +1,4 @@
-package io.pilgrimdb.common
+package io.pilgrimdb.common.annotations
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)

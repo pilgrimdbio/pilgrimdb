@@ -17,7 +17,7 @@ open class MakeMigrationsTask : DefaultTask() {
     @TaskAction
     fun generateMigrations() {
         Reflections.log = project.logger
-        val packageName = "net.buluba.pilgrim.exposed"
+        val packageName = "io.pilgrimdb.sample.exposed"
         val results = ExposedStateProvider(packageName).getState()
         println("Hello from the Makemigrations")
         println("Results: $results")
