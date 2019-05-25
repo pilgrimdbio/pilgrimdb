@@ -33,7 +33,7 @@ abstract class SchemaEditor(val connection: Connection) {
     }
 
     private fun columnSql(model: ModelState, field: Field): ColumnSql? {
-        var dbParams = field.dbParameters(connection)
+        val dbParams = field.dbParameters(connection)
 
         // Check for fields that arent columns (e.g. M2M)
         if (dbParams.type == null) {

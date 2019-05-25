@@ -4,12 +4,12 @@ import org.amshove.kluent.shouldNotBeNull
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Test
 
-class GradlePluginTest {
+class PilgrimPluginTest {
 
     @Test
-    fun oneTest() {
+    fun testRegistration() {
         val project = ProjectBuilder.builder().build()
-        project.pluginManager.apply(GradlePlugin::class.java)
+        project.pluginManager.apply(PilgrimPlugin::class.java)
 
         project.tasks.getByName("makemigrations").shouldNotBeNull()
     }

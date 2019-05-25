@@ -15,7 +15,7 @@ gradlePlugin {
     plugins {
         create("Gradle pilgrim plugin") {
             id = "io.pilgrimdb.gradle.exposed"
-            implementationClass = "io.pilgrimdb.gradle.GradlePlugin"
+            implementationClass = "io.pilgrimdb.gradle.PilgrimPlugin"
         }
     }
 }
@@ -38,6 +38,7 @@ dependencies {
 
     implementation(kotlin("reflect"))
     implementation(project(":common"))
+    implementation(project(":generator"))
     implementation(project(":generator:exposed"))
 
     implementation("org.jetbrains.exposed:exposed:0.13.7")

@@ -12,6 +12,10 @@ buildscript {
     }
 }
 
+pilgrim {
+    scanPackage = "io.pilgrimdb.sample.exposed"
+}
+
 repositories {
     jcenter()
     mavenCentral()
