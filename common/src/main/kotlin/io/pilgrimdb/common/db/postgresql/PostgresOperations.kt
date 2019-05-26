@@ -5,7 +5,7 @@ import io.pilgrimdb.common.db.base.Operations
 
 class PostgresOperations(connection: Connection) : Operations(connection) {
 
-    override fun quote_name(name: String): String {
+    override fun quoteName(name: String): String {
         if (name.startsWith("\"") and name.endsWith("\"")) {
             // Already quoted
             return name

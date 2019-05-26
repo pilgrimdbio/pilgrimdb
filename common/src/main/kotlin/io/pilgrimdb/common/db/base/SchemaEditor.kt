@@ -19,13 +19,13 @@ abstract class SchemaEditor(val connection: Connection) {
         val params = mutableListOf<String>()
 
         for (field in model.fields) {
-            val columnSql = columnSql(model, field)
-            columnSqls.add("${connection.operations.quote_name(field.name)} ${columnSql?.sql}")
+            val columnSql = columnSql(model, field) ?: continue
+            columnSqls.add("${connection.operations.quoteName(field.name)} ${columnSql.sql}")
         }
 
         var sql = sqlCreateTable.substitute(
             mapOf(
-                "table" to connection.operations.quote_name(model.name),
+                "table" to connection.operations.quoteName(model.name),
                 "definition" to columnSqls.joinToString(", ")
             )
         )

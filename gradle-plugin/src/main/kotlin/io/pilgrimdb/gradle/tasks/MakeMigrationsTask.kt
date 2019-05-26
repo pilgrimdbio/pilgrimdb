@@ -4,10 +4,10 @@ import io.pilgrimdb.common.migrations.operations.Migration
 import io.pilgrimdb.generator.MigrationsRepository
 import io.pilgrimdb.generator.exposed.ExposedStateProvider
 import io.pilgrimdb.gradle.PilgrimExtension
+import java.io.FileNotFoundException
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
 import org.reflections.Reflections
-import java.io.FileNotFoundException
 
 open class MakeMigrationsTask(private val project: Project, private val pilgrimExtension: PilgrimExtension) {
 
@@ -18,8 +18,9 @@ open class MakeMigrationsTask(private val project: Project, private val pilgrimE
     fun generateMigrations() {
         Reflections.log = project.logger
 
-        val packageName = pilgrimExtension.scanPackage
-            ?: throw IllegalArgumentException("Pilgrim `scanPackage` configuration is not set")
+        val packageName =
+            pilgrimExtension.scanPackage
+                ?: throw IllegalArgumentException("Pilgrim `scanPackage` configuration is not set")
         project.logger.info("Using $packageName for searching models")
 
         val kotlinPath =

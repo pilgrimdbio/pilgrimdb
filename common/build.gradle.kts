@@ -39,6 +39,9 @@ task<Test>("integrationTest") {
     useJUnitPlatform {
         excludeTags = excludeTasks
     }
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
     mustRunAfter(tasks["test"])
 }
 

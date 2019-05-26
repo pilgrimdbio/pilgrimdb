@@ -2,8 +2,8 @@ package io.pilgrimdb.common.db.base
 
 import io.pilgrimdb.common.config.DatabaseConfig
 import io.pilgrimdb.common.model.Field
-import kotliquery.Row
 import kotlin.reflect.KClass
+import kotliquery.Row
 import kotliquery.Session
 import kotliquery.queryOf
 import kotliquery.sessionOf
@@ -11,7 +11,7 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
-abstract class Connection(val config: DatabaseConfig) {
+abstract class Connection(private val config: DatabaseConfig) {
 
     abstract val dataTypes: Map<KClass<out Field>, String>
 
@@ -28,7 +28,7 @@ abstract class Connection(val config: DatabaseConfig) {
         session = sessionOf(config.url, config.username, config.password)
     }
 
-    fun disconnect(){
+    fun disconnect() {
         logger.debug { "Disconnecting from db" }
         session!!.close()
     }
