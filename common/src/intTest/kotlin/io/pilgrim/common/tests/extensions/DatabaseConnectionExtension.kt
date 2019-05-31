@@ -12,7 +12,11 @@ import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.api.extension.ParameterContext
 import org.junit.jupiter.api.extension.ParameterResolver
 
-abstract class DatabaseConnectionExtension : BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback,
+abstract class DatabaseConnectionExtension :
+    BeforeAllCallback,
+    BeforeEachCallback,
+    AfterAllCallback,
+    AfterEachCallback,
     ParameterResolver {
 
     val connection = createConnection()
@@ -52,8 +56,7 @@ abstract class DatabaseConnectionExtension : BeforeAllCallback, BeforeEachCallba
     }
 }
 
-
-class PostgresConnectionExtension: DatabaseConnectionExtension() {
+class PostgresConnectionExtension : DatabaseConnectionExtension() {
 
     override fun createConnection(): Connection {
         val postgresConfig: DatabaseConfig = DatabaseConfig(

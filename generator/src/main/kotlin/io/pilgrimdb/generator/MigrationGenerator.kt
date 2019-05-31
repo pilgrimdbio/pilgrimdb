@@ -10,7 +10,7 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
-class MigrationGenerator(val basePath: String, val stateProvider: StateProvider) {
+class MigrationGenerator(private val basePath: String, private val stateProvider: StateProvider) {
 
     fun makeMigrations() {
         logger.debug("Starting action: makemigrations")

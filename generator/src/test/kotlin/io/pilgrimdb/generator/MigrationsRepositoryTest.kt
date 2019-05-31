@@ -1,13 +1,13 @@
 package io.pilgrimdb.generator
 
 import io.pilgrimdb.common.migrations.operations.Migration
+import io.pilgrimdb.generator.fixtures.migration1
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
-import org.amshove.kluent.invoking
-import org.amshove.kluent.shouldBeFalse
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldThrow
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.set
+import org.amshove.kluent.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -17,16 +17,22 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MigrationsRepositoryTest {
 
-    val packageName = "io.test"
+    val packageName = "io.pilgrimdb.generator.fixtures"
 
     var tempDir: File? = null
+    var kotlinDir: File? = null
     var packageDir: File? = null
+    var resourcesDir: File? = null
 
     @BeforeEach
     fun init() {
         tempDir = Files.createTempDirectory("migrationsRepositoryTest").toFile()
-        packageDir = File(tempDir, "io/test")
+        kotlinDir = File(tempDir, "kotlin")
+        kotlinDir!!.mkdirs()
+        packageDir = File(kotlinDir, "io/pilgrimdb/generator/fixtures")
         packageDir!!.mkdirs()
+        resourcesDir = File(tempDir, "resources")
+        resourcesDir!!.mkdir()
     }
 
     @AfterEach
@@ -39,7 +45,7 @@ class MigrationsRepositoryTest {
 
         @Test
         fun testNormal() {
-            MigrationsRepository(tempDir!!.absolutePath)
+            MigrationsRepository(kotlinDir!!.absolutePath)
         }
 
         @Test
@@ -54,38 +60,67 @@ class MigrationsRepositoryTest {
     inner class AddMigrationsTest {
 
         @Test
-        fun testMigrationFolderCreation() {
-            val repository = MigrationsRepository(tempDir!!.absolutePath)
+        fun `migrations folder should be created`() {
+            val repository = MigrationsRepository(kotlinDir!!.absolutePath)
 
             File(packageDir, "migrations").exists().shouldBeFalse()
 
-            repository.addMigration(Migration("io.test", "name"))
+            repository.addMigration(Migration(packageName, "name"))
 
             File(packageDir, "migrations").exists().shouldBeTrue()
         }
 
         @Test
-        fun testMigrationAdded() {
-            val repository = MigrationsRepository(tempDir!!.absolutePath)
+        fun `migration file should be created`() {
+            val repository = MigrationsRepository(kotlinDir!!.absolutePath)
 
-            repository.addMigration(Migration("io.test", "name"))
+            repository.addMigration(Migration(packageName, "name"))
 
             File(packageDir, "migrations/name.kt").exists().shouldBeTrue()
         }
 
-        // @Test
-        // fun testGetAllMigrationNames() {
-        //     val repository = MigrationsRepository(tempDir!!.absolutePath)
-        //     val migrations = File(packageDir, "migrations")
-        //     migrations.mkdir()
-        //
-        //     val file = File(migrations, "test.kt")
-        //
-        //     file.createNewFile().shouldBeTrue()
-        //
-        //     val output = repository.getMigrationNames("io.test")
-        //
-        //     output shouldContain "test.kt"
-        // }
+        @Test
+        fun `migration index should be created`() {
+            val repository = MigrationsRepository(kotlinDir!!.absolutePath)
+
+            repository.addMigration(Migration(packageName, "name"))
+
+            val index = File(resourcesDir, "pilgrim_index.json")
+
+            index.exists().shouldBeTrue()
+            val content = Json.parse(MigrationEntry.serializer().set, index.bufferedReader().use { it.readText() }).toMutableSet()
+            content.size shouldEqual 1
+            content shouldContain MigrationEntry(packageName, "name")
+        }
+    }
+
+    @Nested
+    inner class GetMigrationsTest {
+
+        @Test
+        fun `get all migration should not return instances if index file doesnt exist`() {
+            val repository = MigrationsRepository(kotlinDir!!.absolutePath)
+
+            val output = repository.getAllMigrations()
+            output.size shouldEqual 0
+        }
+
+        @Test
+        fun `get all migration should throw exception if resources doesnt exist`() {
+            val repository = MigrationsRepository(kotlinDir!!.absolutePath)
+            resourcesDir!!.delete()
+            invoking { repository.getAllMigrations() } shouldThrow FileNotFoundException::class
+        }
+
+        @Test
+        fun `get all migrations from index file should return instances`() {
+            val repository = MigrationsRepository(kotlinDir!!.absolutePath)
+
+            repository.addMigration(Migration("io.pilgrimdb.generator.fixtures", "Migration1"))
+
+            val output = repository.getAllMigrations()
+            output.size shouldEqual 1
+            output shouldContain migration1
+        }
     }
 }

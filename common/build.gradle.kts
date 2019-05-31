@@ -34,7 +34,7 @@ task<Test>("integrationTest") {
 
     val excludeTasks = mutableSetOf<String>()
     if (project.property("io.pilgrim.common.test.postgres.enabled").toString() == "false") {
-        excludeTasks +=  "postgres"
+        excludeTasks += "postgres"
     }
     useJUnitPlatform {
         excludeTags = excludeTasks
