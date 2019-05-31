@@ -11,9 +11,10 @@ class MigrationRenderer(private val migration: Migration) {
     fun render(): String {
         val content = CodeBlock.builder()
         migration.render(content)
-        return FileSpec.builder(migration.packageName, "${migration.migrationName}.kt")
+        return FileSpec.builder("${migration.packageName}.migrations", "${migration.migrationName}.kt")
             .addImport("io.pilgrimdb.common.migrations.builders", "migration")
-            .addProperty(PropertySpec.builder("migration", Migration::class).initializer(content.build()).build())
+            .addImport("io.pilgrimdb.common.migrations", "MigrationsRegistry")
+            .addProperty(PropertySpec.builder("${migration.migrationName}", Migration::class).initializer(content.build()).build())
             .build()
             .toString()
     }

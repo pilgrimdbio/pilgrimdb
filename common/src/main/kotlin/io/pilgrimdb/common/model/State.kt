@@ -1,13 +1,15 @@
 package io.pilgrimdb.common.model
 
-class ProjectState(val models: MutableMap<String, ModelState> = mutableMapOf()) {
+data class ProjectModelEntry(val packageName: String, val name: String)
 
-    fun addModel(model: ModelState) {
-        models[model.name] = model
+class ProjectState(val models: MutableMap<ProjectModelEntry, ModelState> = mutableMapOf()) {
+
+    fun addModel(packageName: String, model: ModelState) {
+        models[ProjectModelEntry(packageName, model.name)] = model
     }
 
-    fun getModel(table: String): ModelState {
-        return requireNotNull(models[table])
+    fun getModel(packageName: String, model: String): ModelState {
+        return models[ProjectModelEntry(packageName, model)]!!
     }
 }
 

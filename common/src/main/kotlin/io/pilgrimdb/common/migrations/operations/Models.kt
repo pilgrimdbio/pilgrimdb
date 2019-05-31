@@ -18,7 +18,7 @@ sealed class ModelOperation : Operation()
  */
 data class CreateModel(val name: String, val fields: MutableList<Field> = mutableListOf()) : ModelOperation() {
 
-    override fun stateForwards(state: ProjectState) {
-        state.addModel(ModelState(name, fields))
+    override fun stateForwards(packageName: String, state: ProjectState) {
+        state.addModel(packageName, ModelState(name, fields))
     }
 }

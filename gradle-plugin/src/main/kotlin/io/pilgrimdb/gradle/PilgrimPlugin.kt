@@ -6,13 +6,13 @@ import org.gradle.api.Project
 
 class PilgrimPlugin : Plugin<Project> {
 
-    override fun apply(project: Project) {
-        val pilgrimExtension = project.extensions.create("pilgrim", PilgrimExtension::class.java)
+    var extension: PilgrimExtension? = null
 
-        project.tasks.create(MakeMigrationsTask.TASK_NAME) {
-            it.doLast {
-                MakeMigrationsTask(project, pilgrimExtension).generateMigrations()
-            }
-        }
+    override fun apply(project: Project) {
+
+        extension = project.extensions.create("pilgrim", PilgrimExtension::class.java)
+        // val files = project.configurations.getByName("compileClasspath").files
+        val task = project.tasks.create(MakeMigrationsTask.TASK_NAME, MakeMigrationsTask::class.java, extension)
+        task.dependsOn.add(project.getTasksByName("classes", true))
     }
 }

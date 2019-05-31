@@ -39,8 +39,4 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(project(":common"))
     implementation(project(":generator"))
-    implementation(project(":generator:exposed"))
-
-    implementation("org.jetbrains.exposed:exposed:0.13.7")
-    implementation("org.reflections:reflections:0.9.11")
 }

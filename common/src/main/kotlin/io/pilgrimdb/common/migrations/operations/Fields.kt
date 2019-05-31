@@ -16,7 +16,7 @@ sealed class FieldOperation : Operation()
  */
 data class AddField(val tableName: String, val field: Field) : FieldOperation() {
 
-    override fun stateForwards(state: ProjectState) {
-        state.getModel(tableName).fields += field
+    override fun stateForwards(packageName: String, state: ProjectState) {
+        state.getModel(packageName, tableName).fields += field
     }
 }

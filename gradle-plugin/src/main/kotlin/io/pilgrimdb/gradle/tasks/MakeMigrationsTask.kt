@@ -1,38 +1,49 @@
 package io.pilgrimdb.gradle.tasks
 
-import io.pilgrimdb.common.migrations.operations.Migration
-import io.pilgrimdb.generator.MigrationsRepository
-import io.pilgrimdb.generator.exposed.ExposedStateProvider
 import io.pilgrimdb.gradle.PilgrimExtension
 import java.io.FileNotFoundException
-import org.gradle.api.Project
+import javax.inject.Inject
 import org.gradle.api.plugins.JavaPluginConvention
-import org.reflections.Reflections
+import org.gradle.api.tasks.JavaExec
+import org.gradle.api.tasks.TaskAction
 
-open class MakeMigrationsTask(private val project: Project, private val pilgrimExtension: PilgrimExtension) {
+open class MakeMigrationsTask() : JavaExec() {
+
+    lateinit var pilgrimExtension: PilgrimExtension
+
+    @Inject
+    constructor(pilgrimExtension: PilgrimExtension) : this() {
+        this.pilgrimExtension = pilgrimExtension
+    }
 
     companion object {
         const val TASK_NAME = "makemigrations"
     }
 
-    fun generateMigrations() {
-        Reflections.log = project.logger
-
-        val packageName =
-            pilgrimExtension.scanPackage
-                ?: throw IllegalArgumentException("Pilgrim `scanPackage` configuration is not set")
-        project.logger.info("Using $packageName for searching models")
+    @TaskAction
+    override fun exec() {
+        setMain("io.pilgrimdb.generator.MainKt")
 
         val kotlinPath =
             project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.getByName("main")
                 .allSource.srcDirs.first { it.path.contains("/main/kotlin") }
                 ?: throw FileNotFoundException("Kotlin folder not found")
 
-        val results = ExposedStateProvider(packageName).getState()
-        println("Hello from the Makemigrations")
-        println("Results: $results")
+        args(
+            "makemigrations",
+            "--scan-package=${pilgrimExtension.scanPackage}",
+            "--base-path=$kotlinPath",
+            "--db-url=${pilgrimExtension.dbUrl}",
+            "--db-user=${pilgrimExtension.dbUser}",
+            "--db-password=${pilgrimExtension.dbPassword}"
+        )
 
-        val repo = MigrationsRepository(kotlinPath.absolutePath, packageName)
-        repo.addMigration(Migration(packageName, "test1"))
+        val mainSourcet = project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.getByName("main")
+        classpath(
+            mainSourcet.compileClasspath,
+            mainSourcet.runtimeClasspath,
+            project.buildscript.configurations.getByName("classpath").asPath
+        )
+        super.exec()
     }
 }

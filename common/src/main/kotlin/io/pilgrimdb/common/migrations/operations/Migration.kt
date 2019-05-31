@@ -9,7 +9,7 @@ data class Migration(
 ) {
 
     fun mutateState(state: ProjectState): ProjectState {
-        operations.forEach { it.stateForwards(state) }
+        operations.forEach { it.stateForwards(packageName, state) }
         return state
     }
 }

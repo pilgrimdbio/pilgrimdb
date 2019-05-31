@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-import java.io.File
 
 plugins {
     kotlin("jvm") version "1.3.31" apply true
     id("org.jlleitschuh.gradle.ktlint") version "8.0.0" apply true
     jacoco
+    `maven-publish`
 }
 
 jacoco {
@@ -16,14 +16,14 @@ buildscript {
     repositories {
         mavenLocal()
         jcenter()
-        maven(
-            url = "https://plugins.gradle.org/m2/"
-        )
+        maven(url = "https://plugins.gradle.org/m2/")
+        maven(url = "https://kotlin.bintray.com/kotlinx")
     }
 
     dependencies {
         classpath("org.jlleitschuh.gradle:ktlint-gradle:8.0.0")
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.9.18")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.3.30")
     }
 }
 
@@ -78,6 +78,7 @@ subprojects {
     dependencies {
         implementation(kotlin("stdlib"))
         implementation("io.github.microutils:kotlin-logging:1.6.24")
+        implementation("ch.qos.logback:logback-classic:1.2.3")
 
         testImplementation(kotlin("test-junit"))
         testImplementation("org.amshove.kluent:kluent:1.49")

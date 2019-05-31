@@ -1,4 +1,5 @@
 plugins {
+    application
     kotlin("jvm") version "1.3.31" apply true
     id("io.pilgrimdb.gradle.exposed") version "0.0.1" apply true
 }
@@ -12,8 +13,15 @@ buildscript {
     }
 }
 
+application {
+    mainClassName = "io.pilgrimdb.sample.exposed.MainKt"
+}
+
 pilgrim {
     scanPackage = "io.pilgrimdb.sample.exposed"
+    dbUrl = "jdbc:postgresql://localhost:5432/pilgrimdb"
+    dbUser = "pilgrimdb"
+    dbPassword = "pilgrimdb"
 }
 
 repositories {

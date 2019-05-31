@@ -10,5 +10,5 @@ abstract class Operation {
     /**
      * Applies the operation to a [state]
      */
-    abstract fun stateForwards(state: ProjectState)
+    abstract fun stateForwards(packageName: String, state: ProjectState)
 }

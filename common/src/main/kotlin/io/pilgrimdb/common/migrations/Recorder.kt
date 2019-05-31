@@ -8,20 +8,18 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
-class MigrationRecorder(val connection: Connection) {
+class Recorder(val connection: Connection) {
+
+    private val recorderModelName = "pilgrim_migrations"
 
     private val migrationModel = ModelState(
-        "pilgrim_migrations",
+        recorderModelName,
         mutableListOf(
             AutoField("id", primaryKey = true, index = true, unique = true, nullable = false),
             CharField("package", primaryKey = false, index = false, unique = false, nullable = false, maxLength = 150),
             CharField("name", primaryKey = false, index = false, unique = false, nullable = false, maxLength = 150)
         )
     )
-
-    private fun hasTable(): Boolean {
-        return connection.introspection.getTableNames().firstOrNull { it.name == migrationModel.name } != null
-    }
 
     fun ensureSchema() {
         // If table already exists do nothing
@@ -31,5 +29,24 @@ class MigrationRecorder(val connection: Connection) {
         }
         logger.info { "Creating migrations table" }
         connection.schemaEditor.createModel(migrationModel)
+    }
+
+    fun getAppliedMigrations() =
+        connection.query("SELECT package, name FROM $recorderModelName") {
+            Pair(it.string(1), it.string(2))
+        }.toMap()
+
+    fun recordApplied(packageName: String, name: String) {
+        // Todo: Possible sql injection
+        connection.execute("INSERT INTO $recorderModelName (package, name) VALUES ('$packageName', '$name')")
+    }
+
+    fun recordUnapplied(packageName: String, name: String) {
+        // Todo: Possible sql injection
+        connection.execute("DELETE FROM $recorderModelName WHERE package='$packageName' AND name='$name'")
+    }
+
+    private fun hasTable(): Boolean {
+        return connection.introspection.getTableNames().firstOrNull { it.name == migrationModel.name } != null
     }
 }
