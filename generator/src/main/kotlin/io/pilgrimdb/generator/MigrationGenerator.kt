@@ -1,6 +1,7 @@
 package io.pilgrimdb.generator
 
 import io.pilgrimdb.common.migrations.Autodetector
+import io.pilgrimdb.common.migrations.Repository
 import io.pilgrimdb.common.migrations.operations.Migration
 import io.pilgrimdb.common.migrations.providers.StateProvider
 import io.pilgrimdb.common.model.ProjectState
@@ -22,9 +23,9 @@ class MigrationGenerator(private val basePath: String, private val stateProvider
 
         logger.info("Found chnages: $changes")
         for ((packageName, operations) in changes) {
-            val migration = Migration(packageName, generateName(), operations)
-            val migrationsRepository = MigrationsRepository(basePath)
-            migrationsRepository.addMigration(migration)
+            val migration = Migration(packageName, generateName(), operations = operations)
+            val migrationsRepository = Repository(basePath)
+            migrationsRepository.addMigration(migration, MigrationRenderer(migration).render())
         }
     }
 

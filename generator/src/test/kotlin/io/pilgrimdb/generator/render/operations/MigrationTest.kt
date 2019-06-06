@@ -23,7 +23,7 @@ class MigrationTest {
         val field = Migration(
             "packageName",
             "migrationName",
-            mutableListOf(
+            operations = mutableListOf(
                 CreateModel("test")
             )
         )

@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") apply true
     maven
     idea
+    id("kotlinx-serialization") apply true
 }
 
 repositories {
@@ -62,7 +63,6 @@ val intTestImplementation by configurations.getting {
 configurations["intTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
 
 dependencies {
-
     intTestImplementation("org.postgresql:postgresql:42.2.5")
     intTestImplementation("ch.qos.logback:logback-classic:1.2.3")
     intTestImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
@@ -71,9 +71,10 @@ dependencies {
 
 dependencies {
     api(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.0")
+    implementation(kotlin("reflect"))
     implementation("com.github.seratch:kotliquery:1.3.0")
     implementation("org.apache.commons", "commons-text", "1.6")
-    testApi(kotlin("reflect"))
     testImplementation(kotlin("test-junit"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
     testImplementation("com.h2database:h2:1.4.197")
