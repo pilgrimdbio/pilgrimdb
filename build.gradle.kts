@@ -2,10 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    kotlin("jvm") version "1.3.31" apply true
+    id("net.nemerosa.versioning") version "2.8.2" apply true
     id("org.jlleitschuh.gradle.ktlint") version "8.0.0" apply true
+    id("tanvd.kosogor") version "1.0.4" apply true
+    kotlin("jvm") version "1.3.31" apply true
     jacoco
-    `maven-publish`
 }
 
 jacoco {
@@ -45,12 +46,22 @@ tasks.register<JacocoReport>("codeCoverageReport") {
     dependsOn("test")
 }
 
+var ver = versioning.info.display
+
+allprojects {
+    group = "io.pilgrimdb"
+    // version = versioning.info.full
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
     apply(plugin = "org.jetbrains.dokka")
+    apply(plugin = "tanvd.kosogor")
+
+    version = rootProject.version
 
     repositories {
         jcenter()

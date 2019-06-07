@@ -1,4 +1,4 @@
-package io.pilgrimdb.common.test.fixtures
+package io.pilgrimdb.common.test.fixtures.migrations
 
 import io.pilgrimdb.common.migrations.builders.migration
 

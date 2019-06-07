@@ -1,4 +1,6 @@
+import org.gradle.internal.impldep.org.bouncycastle.crypto.tls.BulkCipherAlgorithm.idea
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import tanvd.kosogor.proxy.publishJar
 
 plugins {
     kotlin("jvm") apply true
@@ -78,4 +80,22 @@ dependencies {
     testImplementation(kotlin("test-junit"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
     testImplementation("com.h2database:h2:1.4.197")
+}
+
+publishJar {
+    publication {
+        artifactId = "common"
+    }
+
+    bintray {
+        username = project.properties["bintrayUser"]?.toString() ?: System.getenv("BINTRAY_USER")
+        secretKey = project.properties["bintrayApiKey"]?.toString() ?: System.getenv("BINTRAY_API_KEY")
+        repository = "pilgrimdb"
+        info {
+            githubRepo = "pilgrimdbio/pilgrimdb"
+            vcsUrl = "https://github.com/pilgrimdbio/pilgrimdb"
+            userOrg = "pilgrimdbio"
+            license = "Apache-2.0"
+        }
+    }
 }

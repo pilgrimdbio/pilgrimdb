@@ -1,3 +1,6 @@
+import tanvd.kosogor.proxy.publishJar
+import tanvd.kosogor.proxy.publishPlugin
+
 plugins {
     `java-gradle-plugin`
     kotlin("jvm") apply true
@@ -11,25 +14,36 @@ repositories {
     mavenCentral()
 }
 
-gradlePlugin {
-    plugins {
-        create("Gradle pilgrim plugin") {
-            id = "io.pilgrimdb.gradle.exposed"
-            implementationClass = "io.pilgrimdb.gradle.PilgrimPlugin"
+
+publishJar {
+    publication {
+        artifactId = "gradle-plugin"
+    }
+
+    bintray {
+        username = project.properties["bintrayUser"]?.toString() ?: System.getenv("BINTRAY_USER")
+        secretKey = project.properties["bintrayApiKey"]?.toString() ?: System.getenv("BINTRAY_API_KEY")
+        repository = "pilgrimdb"
+        info {
+            githubRepo = "pilgrimdbio/pilgrimdb"
+            vcsUrl = "https://github.com/pilgrimdbio/pilgrimdb"
+            userOrg = "pilgrimdbio"
+            license = "Apache-2.0"
         }
     }
 }
 
-publishing {
-    // used for publishing to local maven repository
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "io.pilgrimdb.gradle"
-            artifactId = "exposed"
-            version = "0.0.1"
+publishPlugin {
+    id = "io.pilgrimdb.gradle.exposed"
+    displayName = "pilgrim"
+    implementationClass = "io.pilgrimdb.gradle.PilgrimPlugin"
+    version = rootProject.version.toString()
 
-            from(components["kotlin"])
-        }
+    info {
+        website = "https://github.com/pilgrimdbio/pilgrimdb"
+        vcsUrl = "https://github.com/pilgrimdbio/pilgrimdb"
+        description = "A database migration tool for kotlin, inspired from django"
+        tags.addAll(listOf("migrations", "database", "kotlin"))
     }
 }
 

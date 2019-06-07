@@ -1,21 +1,24 @@
 package io.pilgrimdb.sample.exposed
 
 import io.pilgrimdb.common.annotations.PilgrimModel
-import io.pilgrimdb.common.migrations.MigrationsRegistry
 import org.jetbrains.exposed.sql.Table
 
 @PilgrimModel
 object Users : Table() {
-    val id = Users.integer("id").primaryKey() // Column<String>
-    val name = Users.varchar("name", length = 50) // Column<String>
+    val id = integer("id").primaryKey()
+    val name = varchar("name", length = 50)
 }
 
 @PilgrimModel
 object Cities : Table() {
-    val id = Cities.integer("id").autoIncrement().primaryKey() // Column<Int>
-    val name = Cities.varchar("name", 50) // Column<String>
+    val id = integer("id").autoIncrement().primaryKey()
+    val name = varchar("name", 50)
 }
 
-fun main() {
-    println(MigrationsRegistry.getAllMigrations())
+/*
+@PilgrimModel
+object Countries : Table() {
+    val id = integer("id").autoIncrement().primaryKey()
+    val name = varchar("name", 50)
 }
+*/

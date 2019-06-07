@@ -13,7 +13,6 @@ class MigrationRenderer(private val migration: Migration) {
         migration.render(content)
         return FileSpec.builder("${migration.packageName}.migrations", "${migration.migrationName}.kt")
             .addImport("io.pilgrimdb.common.migrations.builders", "migration")
-            .addImport("io.pilgrimdb.common.migrations", "MigrationsRegistry")
             .addProperty(PropertySpec.builder(migration.migrationName, Migration::class).initializer(content.build()).build())
             .build()
             .toString()

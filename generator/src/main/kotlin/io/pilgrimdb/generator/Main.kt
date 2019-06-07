@@ -4,7 +4,7 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.subcommands
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
-import io.pilgrimdb.generator.exposed.ExposedStateProvider
+import io.pilgrimdb.generator.state.StateProvider
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
@@ -23,7 +23,7 @@ class MakeMigrations : CliktCommand(name = "makemigrations") {
     override fun run() {
         logger.debug { "makemigrations: scanPackage: $scanPackage, dbUrl: $dbUrl, dbUser: $dbUser" }
 
-        val generator = MigrationGenerator(basePath, ExposedStateProvider(scanPackage))
+        val generator = MigrationGenerator(basePath, StateProvider(scanPackage))
         generator.makeMigrations()
     }
 }

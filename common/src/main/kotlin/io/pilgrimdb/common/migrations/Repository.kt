@@ -2,14 +2,14 @@ package io.pilgrimdb.common.migrations
 
 import io.pilgrimdb.common.migrations.operations.Migration
 import io.pilgrimdb.common.migrations.operations.MigrationIndex
-import java.io.File
-import java.io.FileNotFoundException
-import kotlin.reflect.KMutableProperty0
-import kotlin.reflect.jvm.kotlinProperty
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.set
 import mu.KotlinLogging
+import java.io.File
+import java.io.FileNotFoundException
+import kotlin.reflect.KProperty0
+import kotlin.reflect.jvm.kotlinProperty
 
 private val logger = KotlinLogging.logger {}
 
@@ -33,17 +33,24 @@ class Repository(basePath: String) {
 
     fun getAllMigrations(): List<Migration> {
         val indexFile = getMigrationsIndex()
+
         val index = if (indexFile.exists()) {
             Json.parse(MigrationIndex.serializer().set, indexFile.bufferedReader().use { it.readText() }).toMutableSet()
         } else {
             mutableSetOf()
         }
 
-        return index.asSequence().map { Class.forName("${it.packageName}.${it.migrationName}Kt") }
+        return index.asSequence().map { Class.forName("${it.packageName}.migrations.${it.migrationName}Kt") }
             .map { it.declaredFields }
-            .map { it[0].kotlinProperty as KMutableProperty0<*> }
+            .map { it[0].kotlinProperty as KProperty0<*> }
             .map { it.get() as Migration }
             .toList()
+    }
+
+    fun getGraph(): Graph {
+        val graph = Graph()
+        getAllMigrations().forEach { graph.addNode(it) }
+        return graph
     }
 
     private fun getPackageDirectory(packageName: String): File {
@@ -67,7 +74,7 @@ class Repository(basePath: String) {
 
         val indexMutable = index.toMutableSet()
         indexMutable.add(MigrationIndex(migration.packageName, migration.migrationName))
-        indexFile.bufferedWriter().use { it.write(Json.stringify(MigrationIndex.serializer().set, indexMutable)) }
+        indexFile.bufferedWriter().use { it.write(Json.indented.stringify(MigrationIndex.serializer().set, indexMutable)) }
     }
 
     private fun getOrCreateMigrationsDirectory(packageName: String): File {

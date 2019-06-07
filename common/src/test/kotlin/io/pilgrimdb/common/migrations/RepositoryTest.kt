@@ -2,7 +2,7 @@ package io.pilgrimdb.common.migrations
 
 import io.pilgrimdb.common.migrations.operations.Migration
 import io.pilgrimdb.common.migrations.operations.MigrationIndex
-import io.pilgrimdb.common.test.fixtures.migration1
+import io.pilgrimdb.common.test.fixtures.migrations.migration1
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
@@ -129,5 +129,15 @@ class RepositoryTest {
             output.size shouldEqual 1
             output shouldContain migration1
         }
+    }
+
+    @Test
+    fun getGraphTest() {
+        val repository = Repository(kotlinDir!!.absolutePath)
+
+        repository.addMigration(Migration(packageName, "Migration1"), "test")
+
+        val output = repository.getGraph()
+        output.nodes.size shouldEqual 1
     }
 }
