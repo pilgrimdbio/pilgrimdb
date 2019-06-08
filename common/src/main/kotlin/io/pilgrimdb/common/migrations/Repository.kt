@@ -2,14 +2,14 @@ package io.pilgrimdb.common.migrations
 
 import io.pilgrimdb.common.migrations.operations.Migration
 import io.pilgrimdb.common.migrations.operations.MigrationIndex
-import kotlinx.serialization.UnstableDefault
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.set
-import mu.KotlinLogging
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.kotlinProperty
+import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.set
+import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 

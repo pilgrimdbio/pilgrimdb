@@ -1,4 +1,3 @@
-import org.gradle.internal.impldep.org.bouncycastle.crypto.tls.BulkCipherAlgorithm.idea
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import tanvd.kosogor.proxy.publishJar
 
@@ -30,10 +29,22 @@ task<Test>("integrationTest") {
     group = "verification"
     testClassesDirs = sourceSets["intTest"].output.classesDirs
     classpath = sourceSets["intTest"].runtimeClasspath
-    systemProperty("io.pilgrim.common.test.postgres.enabled", project.property("io.pilgrim.common.test.postgres.enabled").toString())
-    systemProperty("io.pilgrim.common.test.postgres.url", project.property("io.pilgrim.common.test.postgres.url").toString())
-    systemProperty("io.pilgrim.common.test.postgres.user", project.property("io.pilgrim.common.test.postgres.user").toString())
-    systemProperty("io.pilgrim.common.test.postgres.password", project.property("io.pilgrim.common.test.postgres.password").toString())
+    systemProperty(
+        "io.pilgrim.common.test.postgres.enabled",
+        project.property("io.pilgrim.common.test.postgres.enabled").toString()
+    )
+    systemProperty(
+        "io.pilgrim.common.test.postgres.url",
+        project.property("io.pilgrim.common.test.postgres.url").toString()
+    )
+    systemProperty(
+        "io.pilgrim.common.test.postgres.user",
+        project.property("io.pilgrim.common.test.postgres.user").toString()
+    )
+    systemProperty(
+        "io.pilgrim.common.test.postgres.password",
+        project.property("io.pilgrim.common.test.postgres.password").toString()
+    )
 
     val excludeTasks = mutableSetOf<String>()
     if (project.property("io.pilgrim.common.test.postgres.enabled").toString() == "false") {

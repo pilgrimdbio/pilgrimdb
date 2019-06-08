@@ -14,7 +14,6 @@ repositories {
     mavenCentral()
 }
 
-
 publishJar {
     publication {
         artifactId = "gradle-plugin"

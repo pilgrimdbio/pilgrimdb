@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    id("net.nemerosa.versioning") version "2.8.2" apply true
+    id("eu.davidea.grabver") version "1.0.1"
     id("org.jlleitschuh.gradle.ktlint") version "8.0.0" apply true
     id("tanvd.kosogor") version "1.0.4" apply true
     kotlin("jvm") version "1.3.31" apply true
@@ -46,11 +46,18 @@ tasks.register<JacocoReport>("codeCoverageReport") {
     dependsOn("test")
 }
 
-var ver = versioning.info.display
+var currentVersion = versioning.name
+
+versioning {
+    major = 0
+    minor = 0
+
+    saveOn = "bintrayUpload"
+}
 
 allprojects {
     group = "io.pilgrimdb"
-    // version = versioning.info.full
+    version = currentVersion
 }
 
 subprojects {

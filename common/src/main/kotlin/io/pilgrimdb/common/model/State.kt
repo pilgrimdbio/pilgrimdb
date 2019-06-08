@@ -14,7 +14,7 @@ class ProjectState(val models: MutableMap<ProjectModelEntry, ModelState> = mutab
 
     fun mergeState(toMerge: ProjectState): ProjectState {
         val out = ProjectState(this.models.toMutableMap())
-        for (model in toMerge.models){
+        for (model in toMerge.models) {
             out.models[model.key] = model.value
         }
         return out
